@@ -1,5 +1,6 @@
 package com.mycompany.organaiser;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.*;
@@ -8,6 +9,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.widget.*;
 import android.view.*;
 import java.util.*;
@@ -26,7 +28,10 @@ import com.google.android.material.navigation.NavigationBarItemView;
 
 import java.text.*;
 
+
 public class MainActivity extends AppCompatActivity {
+
+	public final static String TAG = "MainActivityMyLog";
 	TextView tvSecond;
 	Button btAddFastNote;
 	Button btMenu;
@@ -58,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.item_task_main));
 		getWindow().setStatusBarColor(getResources().getColor(R.color.item_task_main));
 		getWindow().setNavigationBarColor(getResources().getColor(R.color.item_task_main));
@@ -65,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 		Toolbar toolbar = findViewById(R.id.toolbar_main_activity);
+		toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
 		setSupportActionBar(toolbar);
 
@@ -84,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerViewFastNotes = findViewById(R.id.recycler_view_fast_notes);
 		fastNoteManager = new FastNoteManager(dataHelper);
 		tvImportantInfo = findViewById(R.id.tv_important_information);
+		//tvImportantInfo.setClipToOutline(true);
 		tvImportantInfo.setMovementMethod(new ScrollingMovementMethod());
 		tvImportantInfo.setText(Html.fromHtml("<big>Today: " + currentDay + " - " + sdfDayOfWeek.format(yesterdayDate)+ "</big>"));
 
@@ -108,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 		btAddFastNote = findViewById(R.id.bt_add_fast_notes);
+		btAddFastNote.setElevation(30);
+		btAddFastNote.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
 
 		LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 		recyclerViewFastNotes.setLayoutManager(layoutManager);
@@ -131,11 +142,18 @@ public class MainActivity extends AppCompatActivity {
 			ImageView iv = view.findViewById(R.id.iv_item_fast_note_delete);
 			iv.setVisibility(View.VISIBLE);
 			iv.setOnClickListener((v) -> {
-				iv.setVisibility(View.GONE);
+				//remove item from recycler view and delete from database
+				fastNoteManager.delete(fn.id);
+				int position = listFastNotes.indexOf(fn);
+				listFastNotes.remove(fn);
+				adapterFastNote.notifyItemRemoved(position);
+				adapterFastNote.notifyItemRangeChanged(position, adapterFastNote.getItemCount());
+				// but position in recycler view is not changed
+
+				/*
 				fastNoteManager.delete(fn.id);
 				adapterFastNote.notifyItemRemoved(listFastNotes.indexOf(fn));
-				listFastNotes.remove(fn);
-
+				listFastNotes.remove(fn);*/
 			});
 		});
 

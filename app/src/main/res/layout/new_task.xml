@@ -3,19 +3,23 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
+	android:background="@android:color/transparent"
 	android:orientation="vertical">
 	
 	<androidx.appcompat.widget.Toolbar
 		android:id="@+id/toolbar_new_task_activity"
 		android:layout_width="match_parent"
 		android:layout_height="?attr/actionBarSize"
-		android:background="?attr/colorPrimary"
+		android:background="@color/little_transparent"
 		android:elevation="5dp"
 		android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 
 	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="5dp"
+		android:layout_weight="10"
+		android:background="@drawable/shape_view_in_dialog"
 		android:orientation="vertical"
 		android:padding="10dp">
 
@@ -25,7 +29,7 @@
 			android:layout_height="wrap_content"
 			android:hint="Title of task"
 			android:padding="5dp"
-			android:background="@color/title_add_new_task_activity"
+			android:background="@drawable/shape_view_in_dialog"
 			android:id="@+id/et_title"/>
 
 		<EditText
@@ -36,49 +40,107 @@
 			android:hint="Plane count"
 			android:padding="5dp"
 			android:layout_marginTop="5dp"
-			android:background="@color/title_add_new_task_activity"
+			android:background="@drawable/shape_view_in_dialog"
 			android:id="@+id/et_full_count"/>
 
-		<Button
+
+		<LinearLayout
 			android:layout_width="match_parent"
-			android:inputType="date"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="5dp"
-			android:ems="10"
-			android:hint="plane date end (no nessesery)"
-			android:id="@+id/et_date_end"/>
+			android:orientation="horizontal"
+			android:layout_marginTop="7dp"
+			android:paddingBottom="2dp"
+			android:paddingTop="2dp"
+			android:paddingLeft="2dp"
+			android:background="@drawable/shape_view_in_dialog">
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text = "set a planned end date"
+				android:textStyle="bold"
+				android:layout_marginStart="10dp"
+				android:layout_marginEnd="5dp"
+				android:layout_marginBottom="2dp"
+				android:padding="13dp"
+				android:background="@drawable/shape_view_in_dialog"/>
+
+			<TextView
+				android:id="@+id/tv_new_task_set_date_plane"
+				android:layout_height="wrap_content"
+				android:layout_width="100dp"
+				android:minWidth="100dp"
+				android:padding="10dp"
+				android:layout_marginEnd="10dp"
+				android:gravity="center"
+				android:background="@drawable/shape_view_in_dialog"
+				android:text="12.03.24"/>
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="7dp"
+			android:paddingBottom="2dp"
+			android:paddingTop="2dp"
+			android:paddingLeft="2dp"
+			android:background="@drawable/shape_view_in_dialog">
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text = "Set color of task"
+				android:textStyle="bold"
+				android:layout_marginStart="10dp"
+				android:layout_marginEnd="5dp"
+				android:layout_marginBottom="2dp"
+				android:padding="13dp"
+				android:background="@drawable/shape_view_in_dialog"/>
+
+			<TextView
+				android:id="@+id/tv_new_task_set_color"
+				android:layout_height="wrap_content"
+				android:layout_width="100dp"
+				android:minWidth="100dp"
+				android:padding="10dp"
+				android:layout_marginEnd="10dp"
+				android:gravity="center"
+				android:background="@drawable/shape_view_in_dialog"
+				android:text="color"/>
+		</LinearLayout>
 
 		<EditText
 			android:layout_width="match_parent"
 			android:inputType="textMultiLine"
-			android:layout_height="150dp"
+			android:layout_height="match_parent"
+			android:maxHeight="100dp"
 			android:ems="10"
 			android:hint="description"
 			android:layout_marginTop="5dp"
-			android:background="@color/description_add_new_task_activity"
+			android:background="@drawable/shape_view_in_dialog"
+			android:padding="5dp"
 			android:gravity="start"
+			android:elevation="20dp"
 			android:id="@+id/et_description"/>
-
-
-		<GridView
-			android:id="@+id/gv_colors_new_task_activity"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="10dp"
-			android:layout_marginBottom="20dp"
-			android:layout_gravity="center|top"
-			android:layout_weight="1"
-			android:numColumns="5" />
-
-		<Button
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="5dp"
-			android:text="Add task"
-			android:id="@+id/bt_add_task"
-			android:onClick="clickBtAddTask"/>
-
 	</LinearLayout>
+
+	<GridView
+		android:id="@+id/gv_colors_new_task_activity"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="5"
+		android:layout_margin="5dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginBottom="20dp"
+		android:background="@drawable/shape_view_in_dialog"
+		android:layout_gravity="center|top"
+		android:numColumns="5" />
+
+
+
 
 
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_dialog_fast_note"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick color for task"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:padding="8dp"
+        android:layout_margin="5dp"
+        android:id="@+id/dialog_tv_start_page"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:background="@drawable/shape_view_in_dialog">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "Current color of task"
+            android:textStyle="bold"
+            android:layout_marginRight="5dp"
+            android:padding="13dp"
+            android:background="@drawable/shape_view_in_dialog"/>
+
+        <TextView
+            android:id="@+id/tv_dialog_new_task_color"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:minWidth="100dp"
+            android:padding="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center"
+            android:background="@drawable/shape_view_in_dialog"
+            android:text="12.03.24"/>
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/grid_view_dialog_new_task_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_view_in_dialog"
+        android:numColumns="4"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_cancel_dialog_new_task_color"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_button_in_dialog"
+            android:text="@string/button_dialog_cancel"/>
+
+        <Button
+            android:id="@+id/bt_ok_dialog_new_task_color"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_button_in_dialog"
+            android:text="@string/button_dialog_ok"/>
+
+    </LinearLayout>
+
+</LinearLayout>

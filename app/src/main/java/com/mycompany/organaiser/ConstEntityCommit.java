@@ -19,7 +19,7 @@ public class ConstEntityCommit {
 	public static final String CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + NAME_TABLE + " (id_commit INTEGER PRIMARY KEY, " + FOREIGN_KEY + " INTEGER, " 
 	+ DATE + " TEXT, " + TIME_START + " TEXT, " + TIME_END + " TEXT, " + TIME_DELTA + " TEXT, "
 	+ PAGE_START + " INTEGER, " + PAGE_END + " INTEGER, "  + PAGE_DELTA + " INTEGER, " + DESCRIPTION + " TEXT, " + LEVEL_ATTENTION + " INTEGER, " 
-	+ PAGE_IN_TIME + " TEXT, FOREIGN KEY (" + FOREIGN_KEY + ") REFERENCES " + ConstEntityTask.taskNameTable + " ( id_task ) ON DELETE CASCADE )";
+	+ PAGE_IN_TIME + " TEXT, FOREIGN KEY (" + FOREIGN_KEY + ") REFERENCES " + ConstEntityTask.taskNameTable + " ( id_task ) ON UPDATE CASCADE ON DELETE CASCADE )";
 	
 	public static final  String DROP_TABLE_QUERY = "DROP TABLE IF EXISTS " + ConstEntityCommit.NAME_TABLE;
 }
