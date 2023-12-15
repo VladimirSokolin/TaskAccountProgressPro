@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 		btTracker = findViewById(R.id.bt_navigation_tracker);
 		btTracker.setOnClickListener((view)->{
 			startActivity(new Intent(this, CommitActivity.class));
+			finish();
 		});
 		btNotePad = findViewById(R.id.bt_navigation_notePad);
 

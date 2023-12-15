@@ -127,6 +127,7 @@ public class DialogFastNoteCreate {
                     noteManager.delete(fastNote.id);
                 }
                 fastNote.value = String.valueOf(etValue.getText());
+                fastNote.reminders = reminders;
                 noteManager.insert(fastNote);
                 listenerOk.updateAdapter(fastNote, isRedaction);
                 dialog.dismiss();

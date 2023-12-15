@@ -100,6 +100,7 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 		btMenu = findViewById(R.id.bt_navigation_menu);
 		btMenu.setOnClickListener(view ->{
 			startActivity(new Intent(this, MainActivity.class));
+			finish();
 		});
 		
 		loadAndSetFactTimesCurrentDay(currentDay);

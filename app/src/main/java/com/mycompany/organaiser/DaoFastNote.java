@@ -21,7 +21,7 @@ public class DaoFastNote {
         ContentValues values = new ContentValues();
         values.put(FastNote.VALUE, fastNote.value);
         values.put(FastNote.TITLE, fastNote.title);
-        long id = db.insert(FastNote.NAME_TABLE, null, values);
+        fastNote.id = db.insert(FastNote.NAME_TABLE, null, values);
       /*  for(RemindersFastNote remindersFastNote : fastNote.reminders){
             if(remindersFastNote.date == 0){
                 throw new IllegalArgumentException("remindersFastNote.date == 0");
@@ -29,7 +29,7 @@ public class DaoFastNote {
             remindersFastNote.idFastNote = id;
             insertReminders(remindersFastNote);
         }*/
-        return id;
+        return fastNote.id;
     }
 
     public void update(FastNote fastNote){

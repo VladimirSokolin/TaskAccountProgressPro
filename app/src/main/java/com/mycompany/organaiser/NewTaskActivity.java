@@ -1,5 +1,5 @@
 package com.mycompany.organaiser;
-import android.annotation.SuppressLint;
+
 import android.app.*;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -21,6 +21,7 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 	EditText etFullCount;
 	Button btDateEnd;
 	EditText etDescription;
+	androidx.appcompat.widget.Toolbar toolbar;
 
 	GridView gridView;
 	DaoTask daoTask;
@@ -37,7 +38,7 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 		setContentView(R.layout.new_task);
 
 
-		androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar_new_task_activity);
+		toolbar = findViewById(R.id.toolbar_new_task_activity);
 		setSupportActionBar(toolbar);
 
 		ActionBar actionBar = getSupportActionBar();
@@ -94,25 +95,34 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 	
 	public void clickBtAddTask(View view){
 
-		task.nameTask = etTitle.getText().toString();
-		task.fullCount = Integer.valueOf(etFullCount.getText().toString());
-		if(btDateEnd != null) task.dateEndPlane = btDateEnd.getText().toString();
-		task.description = etDescription.getText().toString();
-		task.color = color;
 
-		task.dateStart = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-		task.compute(System.currentTimeMillis());
-		task.createRefNameOfCommit();
-
-		boolean is = daoTask.addTask(task);
-
-		if(is) {
-			Toast.makeText(this, "succes", Toast.LENGTH_LONG);
-			finish();
-		}
 
 	}
 
+	//listener on menu click
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+	    int id = item.getItemId();
+	    if (id == R.id.ok_menu_new_task_activity) {
+	        // Add your code here for the menu item click listener
+			task.nameTask = etTitle.getText().toString();
+			task.fullCount = Integer.valueOf(etFullCount.getText().toString());
+			if(btDateEnd != null) task.dateEndPlane = btDateEnd.getText().toString();
+			task.description = etDescription.getText().toString();
+			task.color = color;
+
+			task.dateStart = new SimpleDateFormat("dd.MM.yyyy" , Locale.getDefault()).format(new Date());
+			task.compute(System.currentTimeMillis());
+			task.createRefNameOfCommit();
+			boolean is = daoTask.addTask(task);
+			if(is) {
+				Toast.makeText(this, "Task saved successfully!", Toast.LENGTH_LONG).show();
+				finish();
+			}
+	        return true;
+	    }
+	    return super.onOptionsItemSelected(item);
+	}
 	private void launchGridView() {
 		ViewCreater viewCreater = new ViewCreater() {
 			@Override
@@ -170,16 +180,6 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_new_task_activity, menu);
 		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-		if(item.getItemId() == R.id.ok_menu_new_task_activity){
-			Toast.makeText(this, "save", Toast.LENGTH_LONG);
-		}else if(item.getItemId() == android.R.id.home){
-			finish();
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
