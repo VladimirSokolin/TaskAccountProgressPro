@@ -112,40 +112,46 @@ public class MainActivity extends AppCompatActivity {
 		recyclerViewFastNotes.setLayoutManager(layoutManager);
 		//set click listener on item of recycler
 		adapterFastNote.setOnClickNoteListener ( fn -> {
-			DealPopupMenu popupMenu = new DealPopupMenu(this, recyclerViewFastNotes, getFragmentManager());
-			popupMenu.setEditDealListener(()->{
-				DialogFastNoteCreate dialog = new DialogFastNoteCreate(this, fastNoteManager, fn);
-				dialog.setOnUpdateListener( (object, isRedact)->{
-					Thread thread = new Thread(()->{
-						ArrayList<FastNote> currentListAfterEdit = fastNoteManager.getAllCurrentDate();
-						listFastNotes.clear();
-						listFastNotes.addAll(currentListAfterEdit);
-					});
-					thread.start();
-					synchronized (thread) {
-						adapterFastNote.notifyDataSetChanged();
-					}
-
+			DialogFastNoteCreate dialog = new DialogFastNoteCreate(this, fastNoteManager, fn);
+			dialog.setOnUpdateListener( (object, isRedact)->{
+				Thread thread = new Thread(()->{
+					ArrayList<FastNote> currentListAfterEdit = fastNoteManager.getAllCurrentDate();
+					listFastNotes.clear();
+					listFastNotes.addAll(currentListAfterEdit);
 				});
+				thread.start();
+				synchronized (thread) {
+					adapterFastNote.notifyDataSetChanged();
+				}
+			});
 				dialog.showDialog();
 			});
-			popupMenu.setDeleteDealListener(()->{
+		adapterFastNote.setOnLongClickNoteListener((fn, view)  -> {
+			ImageView iv = view.findViewById(R.id.iv_item_fast_note_delete);
+			iv.setVisibility(View.VISIBLE);
+			iv.setOnClickListener((v) -> {
+				iv.setVisibility(View.GONE);
 				fastNoteManager.delete(fn.id);
+				adapterFastNote.notifyItemRemoved(listFastNotes.indexOf(fn));
 				listFastNotes.remove(fn);
-				adapterFastNote.notifyDataSetChanged();
+
 			});
-			popupMenu.show();
 		});
+
+
+
+
 
 		btAddFastNote.setOnClickListener(view -> {
 			dialogFastNoteCreate = new DialogFastNoteCreate(this, fastNoteManager);
 			dialogFastNoteCreate.setOnUpdateListener( (object, isRedact)->{
-				if(!isRedact) {
+				Thread thread = new Thread(()->{
 					ArrayList<FastNote> currentListAfterEdit = fastNoteManager.getAllCurrentDate();
-					if(listFastNotes.size()<currentListAfterEdit.size()){
-						listFastNotes.clear();
-						listFastNotes.addAll(currentListAfterEdit);
-					}
+					listFastNotes.clear();
+					listFastNotes.addAll(currentListAfterEdit);
+				});
+				thread.start();
+				synchronized (thread){
 					adapterFastNote.notifyDataSetChanged();
 				}
 			});
