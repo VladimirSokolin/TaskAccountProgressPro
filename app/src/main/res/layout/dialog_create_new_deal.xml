@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp">
+
+		<EditText
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/et_dialog_create_new_deal_name"
+			android:hint="Set name new deal"
+			android:layout_weight="1.0"/>
+
+		<TextView
+			android:id="@+id/tv_setting_color"
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:background="#FB0E00"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:gravity="center">
+
+			<TextView
+				android:id="@+id/tv_color_blue"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				android:background="@color/for_day_deal_1"
+				android:layout_marginRight="10dp"/>
+
+			<TextView
+				android:id="@+id/tv_color_yellow"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				android:background="@color/for_day_deal_2"
+				android:layout_marginRight="10dp"/>
+
+			<TextView
+				android:id="@+id/tv_color_purpl"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				android:background="@color/for_day_deal_3"
+				android:layout_marginRight="10dp"/>
+
+			<TextView
+				android:id="@+id/tv_color_green"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				android:background="@color/for_day_deal_4"
+				android:layout_marginRight="10dp"/>
+
+			<TextView
+				android:id="@+id/tv_color_red"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				android:background="@color/for_day_deal_5"
+				android:layout_marginRight="10dp"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</LinearLayout>
+

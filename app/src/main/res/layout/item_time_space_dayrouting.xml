@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="@color/item_time_space_dayrouting"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_time_start_time_space_dayrouting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        tools:text="18:30"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_time_stop_time_space_dayrouting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_description_time_space_dayrouting"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="10:00" />
+
+    <TextView
+        android:id="@+id/tv_name_time_space_dayrouting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+
+        tools:text="Прогулка по лунному городу утром"
+        app:layout_constraintEnd_toStartOf="@+id/iv_delete_time_space_dayrouting"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toEndOf="@+id/tv_time_stop_time_space_dayrouting"
+        app:layout_constraintTop_toTopOf="@+id/tv_time_start_time_space_dayrouting" />
+
+    <TextView
+        android:id="@+id/tv_description_time_space_dayrouting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_name_time_space_dayrouting"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="@+id/tv_name_time_space_dayrouting"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name_time_space_dayrouting"
+        tools:text="Что то другое более громоздкое  Что то другое более громоздкое Что то другое более громоздкое" />
+
+    <ImageView
+        android:id="@+id/iv_delete_time_space_dayrouting"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/ib_delete_item_time_space_dayrouting"
+        android:src="@android:drawable/ic_menu_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintStart_toStartOf="@+id/tv_time_start_time_space_dayrouting"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

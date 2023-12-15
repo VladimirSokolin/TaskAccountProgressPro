@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@drawable/shape_view_in_dialog"
+	android:orientation="vertical">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginTop="5dp">
+
+		<TextView
+			android:id="@+id/tv_name_task_main_activity"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:ellipsize="middle"
+			android:padding="3dp"
+			android:text="Text"
+			android:textSize="16sp"
+			android:textStyle="bold"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/imageView"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintVertical_bias="0.0" />
+
+		<ImageView
+			android:id="@+id/imageView"
+			android:layout_width="44dp"
+			android:layout_height="32dp"
+			android:src="@android:drawable/star_big_on"
+			android:paddingLeft="0dp"
+			android:paddingTop="2dp"
+			android:paddingBottom="2dp"
+			android:paddingRight="5dp"
+			app:layout_constraintBottom_toBottomOf="@+id/tv_name_task_main_activity"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/tv_name_task_main_activity" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+	<com.mycompany.organaiser.ProgressTaskView
+		android:id="@+id/progress_task_view_main_activity"
+		android:layout_width="match_parent"
+		android:layout_height="8dp"
+		android:layout_marginLeft="15dp"
+		android:layout_marginRight="15dp"/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="Text"
+		android:padding="3dp"
+		android:background="@drawable/shape_view_in_dialog"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginBottom="5dp"
+		android:id="@+id/tv_comments_main_activity"/>
+
+</LinearLayout>
+

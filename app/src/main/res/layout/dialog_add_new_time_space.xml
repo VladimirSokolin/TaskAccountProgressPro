@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:layout_margin="10dp"
+	android:background="#EEEC78">
+
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="Name Deal"
+		android:id="@+id/et_day_time_name_deal"/>
+
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/tvStartTimeDialog"
+			android:text="start from:"
+			android:textStyle="bold"
+			android:paddingLeft="10dp"
+			android:paddingTop="10dp"
+			android:paddingBottom="10dp"
+			android:layout_weight="1.0"
+			android:id="@+id/tv_from"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/tvStopTimeDialog"
+			android:text="to"
+			android:textStyle="bold"
+			android:paddingLeft="10dp"
+			android:paddingTop="10dp"
+			android:paddingBottom="10dp"
+			android:layout_weight="1.0"
+			android:id="@+id/tv_to"/>
+
+	</LinearLayout>
+
+	<EditText
+		android:layout_width="match_parent"
+		android:ems="10"
+		android:layout_height="wrap_content"
+		android:inputType="textMultiLine"
+		android:hint="Description"
+		android:id="@+id/et_time_space_description"/>
+	<GridView
+		android:id="@+id/grid_view_dialog_add_new_timespace"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:numColumns="4"/>
+
+</LinearLayout>
+

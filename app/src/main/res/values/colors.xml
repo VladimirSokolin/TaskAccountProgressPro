@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffff</color>
+    <color name="yellow">#e2f725</color>
+    <color name="TVFact">#ffffff</color>
+    <color name="TVPlane">#ffffff</color>
+    <color name="TVTimer">#DCBA95</color>
+    <color name="gridView">#ffffff</color>
+    <color name="tvStartTimeDialog">#F19AA0</color>
+    <color name="tvStopTimeDialog">#8773ED</color>
+
+    <color name="layout_dialog_commit_complete">#9E7154</color>
+    <color name="views_in_dialog">#30FFFFFF</color>
+    <color name="views_is_focused">#10FFFFFF</color>
+    <color name="pressed_views_in_dialog">#80555555</color>
+    <color name="little_transparent">#36000000</color>
+
+    <color name="for_day_deal_1">#00BAFF</color>
+    <color name="for_day_deal_2">#FFFA01</color>
+    <color name="for_day_deal_3">#FF01F7</color>
+    <color name="for_day_deal_4">#01FF10</color>
+    <color name="for_day_deal_5">#FB0E00</color>
+    <color name="for_day_deal_6">#00FFAF</color>
+
+    <color name="ib_delete_item_time_space_dayrouting">#E4B494</color>
+    <color name="toolbar_dayrouting">#C5C5C5</color>
+    <color name="item_time_space_dayrouting">#E4B494</color>
+
+    <color name="item_task_main">#3A614A</color>
+    <color name="tv_name_item_task_main">#CA9776</color>
+    <color name="tv_comments_item_task_main">#CA9776</color>
+
+    <color name="title_add_new_task_activity">#CA9776</color>
+    <color name="pages_add_new_task_activity">#CA9776</color>
+    <color name="description_add_new_task_activity">#E4B190</color>
+
+</resources>

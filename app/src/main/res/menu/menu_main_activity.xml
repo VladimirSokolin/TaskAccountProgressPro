@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item
+        android:id="@+id/item_add_task"
+        android:title="Add new task" />
+    
+	<item
+        android:id="@+id/item_achievements"
+        android:title="Achievements"/>
+    
+	<item
+        android:id="@+id/item_commit"
+        android:title="Go to trecker"/>
+    
+</menu>

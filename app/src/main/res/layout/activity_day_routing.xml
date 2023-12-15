@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+	
+	<Toolbar
+		android:id="@+id/toolbarDayRoutingActivity"
+		android:layout_width="match_parent"
+		android:layout_height="56dp"
+		android:background="@color/toolbar_dayrouting"
+		android:elevation="4dp">
+		
+		<ImageButton
+			android:id="@+id/comeback_day_routing_activity"
+			android:layout_width="30dp"
+			android:layout_height="30sp"
+			android:layout_gravity="start"
+			android:background="@drawable/ic_arrow_back"/>
+		
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			android:text="Day routing"/>
+		
+		<ImageButton
+			android:id="@+id/save_day_routing_activity"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:layout_gravity="end"
+			android:layout_marginRight="10dp"
+			android:background="@drawable/ic_save"/>
+		
+		
+		<ImageButton
+			android:id="@+id/to_do_template"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:layout_gravity="end"
+			android:layout_marginRight="16dp"
+			android:background="@drawable/white_star"/>
+
+	</Toolbar>
+	
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		
+
+	<ListView
+		android:id="@+id/list_view_time_space_dayrouting"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+	<ImageButton
+		android:id="@+id/fab_day_routing_add"
+		android:layout_width="60dp"
+		android:layout_height="60dp"
+		android:background="@drawable/fab"
+		android:layout_gravity = "bottom|end"
+		android:layout_marginRight = "20dp"
+		android:layout_marginBottom = "20dp"/>
+	
+	</FrameLayout>
+
+</LinearLayout>
+

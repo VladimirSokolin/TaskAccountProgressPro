@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+	
+	<androidx.appcompat.widget.Toolbar
+		android:id="@+id/toolbar_new_task_activity"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		android:background="?attr/colorPrimary"
+		android:elevation="5dp"
+		android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:padding="10dp">
+
+		<EditText
+			android:layout_width="match_parent"
+			android:ems="10"
+			android:layout_height="wrap_content"
+			android:hint="Title of task"
+			android:padding="5dp"
+			android:background="@color/title_add_new_task_activity"
+			android:id="@+id/et_title"/>
+
+		<EditText
+			android:layout_width="match_parent"
+			android:inputType="number"
+			android:layout_height="wrap_content"
+			android:ems="10"
+			android:hint="Plane count"
+			android:padding="5dp"
+			android:layout_marginTop="5dp"
+			android:background="@color/title_add_new_task_activity"
+			android:id="@+id/et_full_count"/>
+
+		<Button
+			android:layout_width="match_parent"
+			android:inputType="date"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:ems="10"
+			android:hint="plane date end (no nessesery)"
+			android:id="@+id/et_date_end"/>
+
+		<EditText
+			android:layout_width="match_parent"
+			android:inputType="textMultiLine"
+			android:layout_height="150dp"
+			android:ems="10"
+			android:hint="description"
+			android:layout_marginTop="5dp"
+			android:background="@color/description_add_new_task_activity"
+			android:gravity="start"
+			android:id="@+id/et_description"/>
+
+
+		<GridView
+			android:id="@+id/gv_colors_new_task_activity"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="20dp"
+			android:layout_gravity="center|top"
+			android:layout_weight="1"
+			android:numColumns="5" />
+
+		<Button
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:text="Add task"
+			android:id="@+id/bt_add_task"
+			android:onClick="clickBtAddTask"/>
+
+	</LinearLayout>
+
+
+
+</LinearLayout>
+
