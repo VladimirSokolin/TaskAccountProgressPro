@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 	public final static String TAG = "MainActivityMyLog";
 	TextView tvSecond;
 	Button btAddFastNote;
+	Button btAddTask;
 	Button btMenu;
 	Button btTracker;
 	Button btNotePad;
@@ -110,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
 		btNotePad = findViewById(R.id.bt_navigation_notePad);
 
 		btSettings = findViewById(R.id.bt_navigation_settings);
+		btSettings.setOnClickListener((view)->{
+			startActivity(new Intent(this, SettingsActivity.class));
+			finish();
+		});
 
 		listFastNotes = fastNoteManager.getAllCurrentDate();
 		adapterFastNote = new AdapterFastNote(listFastNotes);
@@ -117,8 +122,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 		btAddFastNote = findViewById(R.id.bt_add_fast_notes);
-		btAddFastNote.setElevation(30);
-		btAddFastNote.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+
+		btAddTask = findViewById(R.id.bt_add_task);
+
+		btAddTask.setOnClickListener((view)->{
+			Intent intent = new Intent(this, NewTaskActivity.class);
+			startActivity(intent);
+		});
+
 
 		LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 		recyclerViewFastNotes.setLayoutManager(layoutManager);
@@ -186,6 +197,15 @@ public class MainActivity extends AppCompatActivity {
 				return false;
 			}
 		});
+
+		mListView.setOnItemClickListener(new OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> av, View view, int i, long l){
+				Intent intent = new Intent(MainActivity.this, NewTaskActivity.class);
+				intent.putExtra("id", list.get(i).id);
+				startActivity(intent);
+			}
+		});
     }
 
 	class MyAdapter extends ArrayAdapter<Task> {
@@ -211,7 +231,8 @@ public class MainActivity extends AppCompatActivity {
 			if(curTask.countInDay == 0){
 				textComments.setText(currentFullCountString + "\nThe daily actual rate is calculated - not enough time has passed");
 			} else {
-				textComments.setText(currentFullCountString + "\n" + curTask.dayToComlete + " days left until completion, normal: " + curTask.countInDay + " per day");
+				String dayToComplString = String.format("%.3f", curTask.dayToComlete);
+				textComments.setText(currentFullCountString + "\n" + dayToComplString + " days left until completion, normal: " + curTask.countInDay + " per day");
 			}
 			ProgressTaskView progressTaskView = view.findViewById(R.id.progress_task_view_main_activity);
 			progressTaskView.setCount(curTask.currentCount, curTask.fullCount);

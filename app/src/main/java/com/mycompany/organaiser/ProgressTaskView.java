@@ -5,9 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
 
 public class ProgressTaskView extends View {
 
@@ -45,17 +47,21 @@ public class ProgressTaskView extends View {
 
     private int calculateColorFromCount(){
         if(currentCount != 0 && fullCount != 0){
-            int proportion = (int)(currentCount / fullCount * 100);
+            int proportion = (int)(currentCount / fullCount * 120);
 
-            if(proportion <= 25){
-                return Color.RED;
+            Log.e(MainActivity.TAG, "calculateColorFromCount: " + proportion + ", currentCount " + currentCount + ", fullCount " + fullCount);
+            float[] hsv = new float[]{proportion, 10, 89};
+            return Color.HSVToColor(hsv);
+
+            /*if(proportion <= 25){
+                return Color.rgb();
             } else if(proportion <= 50){
                 return Color.rgb(255, 179,0);
             } else if(proportion <= 75){
                 return Color.YELLOW;
             } else {
                 return Color.GREEN;
-            }
+            }*/
         }
         return color;
     }

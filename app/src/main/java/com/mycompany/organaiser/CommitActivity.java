@@ -195,17 +195,7 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if(isPress){
-			timekeeper.isInProcess = true;
-			if(task instanceof TaskDayDeal){
-				timekeeper.typeTask = 2;
-			} else {
-				timekeeper.typeTask = 1;
-			}
-			timekeeper.timeStart = startTime;
-			timekeeper.idTask = task.id;
-			timekeeper.dao.updateTimekeeper(timekeeper);
-		}
+
 	}
 
 	private void update(){
@@ -501,7 +491,6 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 
 	private void startProcessAccounting(Task task,long startTime, View view ){
 		if (isPress) {
-
 			if (task instanceof TaskDayDeal) {
 				TimeSpace ts = task.completeDeal();
 				ts.setColor(task.color);
@@ -533,12 +522,22 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 				scaleTextSize.setDuration(1000); // Продолжительность анимации в миллисекундах
 				scaleTextSize.start();
 			}
-
-
 			if (!(task instanceof TaskDayDeal)) {
 				commit = new Commit((int) task.currentCount, startTime);
 			}
 			isPress = true;
+
+			// Save data of start time:
+			timekeeper.isInProcess = true;
+			if(task instanceof TaskDayDeal){
+				timekeeper.typeTask = 2;
+			} else {
+				timekeeper.typeTask = 1;
+			}
+			timekeeper.timeStart = startTime;
+			timekeeper.idTask = task.id;
+			timekeeper.dao.updateTimekeeper(timekeeper);
+
 
 			Runnable runnable = new Runnable() {
 				public void run() {

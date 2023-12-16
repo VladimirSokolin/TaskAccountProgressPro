@@ -46,10 +46,9 @@ public class Commit{
 	}
 	
 	public void toStopTimer(){
-		systemStopDate = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-		timeEnd = sdf.format(systemStopDate);
 		timeEndMS = System.currentTimeMillis();
+		timeEnd = sdf.format(timeEndMS);
 		long timeDeltaMS = timeEndMS - timeStartMS;
 		timeDelta = sdf.format(timeDeltaMS);
 		/* Old solution, but I'll leave it here

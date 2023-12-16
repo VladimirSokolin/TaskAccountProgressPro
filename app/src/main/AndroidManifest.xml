@@ -1,62 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	package="com.mycompany.organaiser">
-
-
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mycompany.organaiser">
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/fab"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-		android:screenOrientation="portrait"
-		android:resizeableActivity = "true">
-		
-		<provider
-			android:name=".NoterContentProvider"
-			android:authorities="com.mycompany.organaiser.NoterContentProvider"
-			android:exported="true"/>
-		
-		<service 
-			android:name=".ExampleService"
-			android:description="@string/description">
-		</service>
-		
-		<activity
-			android:name =".MainActivity"
-			android:label="@string/app_name"
-			android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-			android:exported="true">
+        android:resizeableActivity="true"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/Theme.AppCompat.DayNight"
+            android:exported="false" />
 
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		
-		<activity
-			android:name=".NewTaskActivity"
-			android:label="New Task"
-			android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-			android:exported="true">
+        <provider
+            android:name=".NoterContentProvider"
+            android:authorities="com.mycompany.organaiser.NoterContentProvider"
+            android:exported="true" />
 
-		</activity>
-		<activity
-			android:name=".CommitActivity"
-			android:label="Timer Task"
-			android:exported="true">
+        <service
+            android:name=".ExampleService"
+            android:description="@string/description"></service>
 
-		</activity>
-		<activity
-			android:name=".DayRoutingActivity">
-		</activity>
-		<activity
-			android:name=".ProgressActivity"
-			android:label="Progress">
-		</activity>
-			
-		
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NewTaskActivity"
+            android:exported="true"
+            android:label="New Task"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+        <activity
+            android:name=".CommitActivity"
+            android:exported="true"
+            android:label="Timer Task"></activity>
+        <activity android:name=".DayRoutingActivity"></activity>
+        <activity
+            android:name=".ProgressActivity"
+            android:label="Progress"></activity>
     </application>
 
 </manifest>

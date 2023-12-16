@@ -1,6 +1,9 @@
 package com.mycompany.organaiser;
 
 import android.app.*;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.*;
@@ -26,8 +29,9 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 
 	GridView gridView;
 	DaoTask daoTask;
-	Task task = new Task();
+	Task task;
 	int color;
+	boolean isEdit = false;
 
 	ArrayList<AbstractItemGridView> list;
 	AbstractItemGridView item;
@@ -52,6 +56,8 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 		window.setStatusBarColor(getResources().getColor(R.color.item_task_main));
 		window.setNavigationBarColor(getResources().getColor(R.color.item_task_main));
 
+
+
 		
 		etTitle = findViewById(R.id.et_title);
 		etFullCount = findViewById(R.id.et_full_count);
@@ -59,8 +65,33 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 		tvSetColor = findViewById(R.id.tv_new_task_set_color);
 		etDescription = findViewById(R.id.et_description);
 		gridView = findViewById(R.id.gv_colors_new_task_activity);
-		
+
 		daoTask = new DaoTask(new MyDatabaseOpenHelper(this));
+
+		Intent intent = getIntent();
+		long id = intent.getLongExtra("id", 0);
+		if(id != 0) {
+			task = daoTask.getTask(id);
+			etTitle.setText(task.nameTask);
+			etFullCount.setText(String.valueOf(task.fullCount));
+			if(task.dateEndPlane != null) tvDateEnd.setText(task.dateEndPlane);
+			if(task.description != null) etDescription.setText(task.description);
+			if(task.color != 0) {
+				color = task.color;
+				GradientDrawable drawable = new GradientDrawable();
+				drawable.setShape(GradientDrawable.RECTANGLE);
+				drawable.setCornerRadius(20);
+				drawable.setColor(task.color);
+				tvSetColor.setBackground(drawable);
+			}
+			launchGridViewOldTaskItem(gridView);
+			isEdit = true;
+
+		} else {
+			task = new Task();
+		}
+		
+
 
 		tvDateEnd.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -157,19 +188,25 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 			if(etFullCount.getText().toString().isEmpty()) {
 				task.fullCount = 0;
 			} else {
-				task.fullCount = Integer.valueOf(etFullCount.getText().toString());
+				task.fullCount = Double.valueOf(etFullCount.getText().toString());
 			}
 			if(tvDateEnd != null) task.dateEndPlane = tvDateEnd.getText().toString();
 			task.description = etDescription.getText().toString();
 			task.color = color;
 
-			task.dateStart = new SimpleDateFormat("dd.MM.yyyy" , Locale.getDefault()).format(new Date());
-			task.compute(System.currentTimeMillis());
-			task.createRefNameOfCommit();
-			boolean is = daoTask.addTask(task);
-			if(is) {
-				Toast.makeText(this, "Task saved successfully!", Toast.LENGTH_LONG).show();
-				finish();
+			if(isEdit){
+				task.computeBeforeUpdate();
+				daoTask.update(task);
+				Toast.makeText(this, "Task updated successfully!", Toast.LENGTH_LONG).show();
+			} else {
+				task.dateStart = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
+				task.compute(System.currentTimeMillis());
+
+				boolean is = daoTask.addTask(task);
+				if (is) {
+					Toast.makeText(this, "Task saved successfully!", Toast.LENGTH_LONG).show();
+					finish();
+				}
 			}
 	        return true;
 	    }
@@ -183,7 +220,6 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 			@Override
 			public View createView(int position, View convertView, ViewGroup parent, Object object) {
 				AbstractItemGridView item = (AbstractItemGridView) object;
-
 
 				View view = LayoutInflater.from(NewTaskActivity.this).inflate(R.layout.color_item, parent, false);
 				ColorView colorView = view.findViewById(R.id.color_view);
@@ -228,6 +264,30 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 		list.add(item);
 
 		adapter = new UniversalAdapter(this, R.layout.color_item, list, viewCreater);
+		gridView.setAdapter(adapter);
+	}
+	private void launchGridViewOldTaskItem(GridView gridView) {
+		ViewCreater viewCreater = new ViewCreater() {
+			@Override
+			public View createView(int position, View convertView, ViewGroup parent, Object object) {
+				SummaryOfTask item = (SummaryOfTask) object;
+				View view = LayoutInflater.from(NewTaskActivity.this).inflate(R.layout.item_settings_old_task, parent, false);
+				ImageView iv = view.findViewById(R.id.iv_task_statistics);
+				TextView tv = view.findViewById(R.id.tv_task_statistics);
+				iv.setImageBitmap(item.bitmap);
+				tv.setText(item.name);
+				return view;
+				//Bitmap bitmap = Bitmap.createBitmap(new int[]{R.drawable.commit_view}, 20, 20, Bitmap.Config.ARGB_8888);
+			}
+		};
+
+		ArrayList<SummaryOfTask> listOfSummary = new ArrayList<>();
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.commit_view);
+		listOfSummary.add(new SummaryOfTask("Statistics", bitmap));
+		listOfSummary.add(new SummaryOfTask("Graphics", bitmap));
+		listOfSummary.add(new SummaryOfTask("Comments", bitmap));
+
+		UniversalAdapter<SummaryOfTask> adapter = new UniversalAdapter<>(this, R.layout.item_settings_old_task, listOfSummary, viewCreater);
 		gridView.setAdapter(adapter);
 	}
 

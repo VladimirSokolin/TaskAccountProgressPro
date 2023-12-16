@@ -32,36 +32,36 @@
 			android:layout_marginLeft="5dp"
 			android:background="@drawable/shape_view_in_dialog"
 			android:padding="5dp"
-			app:layout_constraintBottom_toBottomOf="@+id/bt_go_to_notepad"
+			app:layout_constraintBottom_toBottomOf="@+id/bt_add_fast_notes"
 			app:layout_constraintEnd_toStartOf="@+id/guideline"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="@+id/bt_add_fast_notes" />
+			app:layout_constraintTop_toTopOf="@+id/bt_add_task" />
 
 		<Button
-			android:id="@+id/bt_add_fast_notes"
+			android:id="@+id/bt_add_task"
 			android:layout_width="70dp"
 			android:layout_height="70dp"
 			android:layout_marginTop="10dp"
 			android:layout_marginEnd="5dp"
 			android:elevation="10dp"
-			android:background="@drawable/selector_button_notes"
-			android:text="add"
+			android:background="@drawable/selector_button_navigate"
+			android:text="put the task"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="@+id/guideline"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<Button
-			android:id="@+id/bt_go_to_notepad"
+			android:id="@+id/bt_add_fast_notes"
 			android:layout_width="70dp"
 			android:layout_height="70dp"
 			android:layout_marginTop="20dp"
 			android:layout_marginEnd="5dp"
-			android:background="@drawable/selector_button_notes"
+			android:background="@drawable/selector_button_navigate"
 			android:elevation="10dp"
-			android:text="See"
+			android:text="quick note"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="@+id/guideline"
-			app:layout_constraintTop_toBottomOf="@+id/bt_add_fast_notes" />
+			app:layout_constraintTop_toBottomOf="@+id/bt_add_task" />
 
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/recycler_view_fast_notes"
@@ -74,7 +74,7 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/bt_go_to_notepad" />
+			app:layout_constraintTop_toBottomOf="@+id/bt_add_fast_notes" />
 
 		<androidx.constraintlayout.widget.Guideline
 			android:id="@+id/guideline"

@@ -137,7 +137,7 @@
 		android:layout_marginBottom="20dp"
 		android:background="@drawable/shape_view_in_dialog"
 		android:layout_gravity="center|top"
-		android:numColumns="5" />
+		android:numColumns="3" />
 
 
 

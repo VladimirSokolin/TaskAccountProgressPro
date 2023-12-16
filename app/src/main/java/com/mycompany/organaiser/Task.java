@@ -28,10 +28,7 @@ public class Task implements CompleteDealIntergace {
 	long dayGoOn;
 	
 	String refNameOfCommit;
-	
-	public void createRefNameOfCommit(){
-		refNameOfCommit = nameTask + nameTask;
-	}
+
 	
 	public String getRefNameOfCommit(){
 		return refNameOfCommit;
@@ -49,8 +46,6 @@ public class Task implements CompleteDealIntergace {
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
-
-
 		try{
 			long timeMillis = System.currentTimeMillis() - timeStartTask;
 			dayGoOn = TimeUnit.DAYS.convert(timeMillis, TimeUnit.MILLISECONDS);
@@ -63,6 +58,11 @@ public class Task implements CompleteDealIntergace {
 		if(Double.isInfinite(countInDay)) countInDay = 0;
 		dayToComlete = remainCount / countInDay;
 		if(Double.isInfinite(dayToComlete)) dayToComlete = 9999;
+	}
+
+	public void computeBeforeUpdate(){
+		remainCount = fullCount - currentCount;
+		dayToComlete = remainCount / countInDay;
 	}
 
 	@Override
