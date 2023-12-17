@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/constraint_screen"
+      android:layout_width="345dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="20dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      >
+
+    <Button
+        android:id="@+id/bt_demonstration"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/selector_button_navigate"
+        android:elevation="10dp"
+        android:text="you button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toEndOf="@+id/tv_demonstration"
+        app:layout_constraintTop_toTopOf="@+id/tv_demonstration"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_weight="10"
+        android:background="@drawable/shape_view_in_dialog"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintVertical_bias="0.0"
+        >
+
+      <EditText
+          android:id="@+id/et_title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/shape_view_in_dialog"
+          android:ems="10"
+          android:hint="If you wish to be loved, love!"
+          android:padding="5dp"
+          />
+
+      <EditText
+          android:id="@+id/et_full_count"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          android:background="@drawable/shape_view_in_dialog"
+          android:ems="10"
+          android:hint="True love stories never have endings"
+          android:inputType="number"
+          android:padding="5dp"
+          />
+
+
+      <EditText
+          android:id="@+id/et_description"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="5dp"
+          android:background="@drawable/shape_view_in_dialog"
+          android:elevation="20dp"
+          android:ems="10"
+          android:gravity="start"
+          android:hint="description"
+          android:inputType="textMultiLine"
+          android:maxHeight="100dp"
+          android:padding="5dp"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="7dp"
+          android:background="@drawable/shape_view_in_dialog"
+          android:orientation="horizontal"
+          android:paddingBottom="2dp"
+          android:paddingLeft="2dp"
+          android:paddingTop="2dp"
+          >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_view_in_dialog"
+            android:padding="13dp"
+            android:text="Set color"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tv_new_task_set_color"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/shape_view_in_dialog"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:padding="10dp"
+            />
+      </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_demonstration"
+        android:layout_width="227dp"
+        android:layout_height="99dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_view_in_dialog"
+        android:padding="5dp"
+        android:text="Love like a shadow flies when substance love pursues; Pursuing that that flies, and flying what pursues."
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <include
+        layout="@layout/task_item"
+        android:id="@+id/include"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_demonstration"
+        />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+  <LinearLayout
+      android:id="@+id/linear_edit_color"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:layout_marginStart="20dp"
+      android:layout_marginEnd="20dp"
+      android:background="@drawable/shape_view_in_dialog"
+      android:orientation="horizontal"
+      android:paddingBottom="2dp"
+      android:paddingLeft="2dp"
+      android:paddingTop="2dp"
+      app:layout_constraintTop_toBottomOf="@+id/constraint_screen"
+      tools:layout_editor_absoluteX="0dp"
+      >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_view_in_dialog"
+        android:padding="13dp"
+        android:text="Set color of app"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tv_settings_color_app"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/shape_view_in_dialog"
+        android:gravity="center"
+        android:minWidth="100dp"
+        android:padding="10dp"
+        android:text="color"
+        />
+  </LinearLayout>
+  <Button
+      android:id="@+id/bt_settings_color_app_ok"
+      android:layout_width="90dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="20dp"
+      android:layout_marginTop="12dp"
+      android:text="OK"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/linear_edit_color"
+      />
+  <Button
+      android:id="@+id/bt_settings_color_app_cancel"
+      android:layout_width="90dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="24dp"
+      android:layout_marginTop="12dp"
+      android:text="Cancel"
+      app:layout_constraintEnd_toStartOf="@+id/bt_settings_color_app_ok"
+      app:layout_constraintTop_toBottomOf="@+id/linear_edit_color"
+      />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -192,11 +192,6 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 		super.onStart();
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-
-	}
 
 	private void update(){
 		listTasks = daoTask.getAllTask();
@@ -233,78 +228,6 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 	{
 		startActivity(new Intent(this, MainActivity.class));
 		super.onBackPressed();
-	}
-	
-	void showDialogProba() {
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		//builder.setTitle("proba");
-		//builder.setMessage("interest what to do");
-
-		final View mLayout = getLayoutInflater().inflate(R.layout.dialog_complete_commit, null);
-		TextView startPage = mLayout.findViewById(R.id.dialog_tv_start_page);
-		startPage.setText("last time we stopped at: " + task.currentCount);
-		final EditText etPage = mLayout.findViewById(R.id.et_new_current_page);
-		final Spinner etAttention = mLayout.findViewById(R.id.spinner_attention);
-
-		/*builder.setPositiveButton("Ok", new  DialogInterface.OnClickListener(){
-			@Override
-			public void onClick(DialogInterface di, int i){
-
-				String strPage = etPage.getText().toString();
-				String strAttention = etAttention.getSelectedItem().toString();
-				// get array from resources array_string
-				String[] arrayAttention = getResources().getStringArray(R.array.level_attention);
-				int dAttention;
-
-				if(strAttention.equals(arrayAttention[0])){
-					dAttention = 1;
-				} else if(strAttention.equals(arrayAttention[1])){
-					dAttention = 2;
-				} else if(strAttention.equals(arrayAttention[2])){
-					dAttention = 3;
-				} else if(strAttention.equals(arrayAttention[3])){
-					dAttention = 4;
-				} else if(strAttention.equals(arrayAttention[4])){
-					dAttention = 5;
-				} else {
-					dAttention = 0;
-				}
-
-				double dPage = Double.parseDouble(strPage);
-			 	String dDescription = ((EditText)mLayout.findViewById(R.id.description_dialog_commit)).getText().toString();
-
-				onCommitComplete(dPage, dDescription, dAttention);
-			}
-		});
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-			@Override
-			public void onClick(DialogInterface di, int i){
-				di.cancel();
-			}
-		});*/
-		AlertDialog alertDialog = builder.create();
-
-		Window w = alertDialog.getWindow();
-		if (w != null) {
-			w.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		}
-		alertDialog.setCanceledOnTouchOutside(false);
-
-		alertDialog.show();
-
-		/*Button btPositive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-		if(btPositive != null){
-			btPositive.setBackgroundColor(getResources().getColor(R.color.item_task_main));
-			btPositive.setTextColor(Color.WHITE);
-		} else Log.i("buttons", "bt null");
-
-		Button btNegative = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-		if(btNegative != null){
-			btNegative.setBackgroundColor(getResources().getColor(R.color.item_task_main));
-			btNegative.setTextColor(Color.WHITE);
-		} else Log.i("buttons", "bt null");*/
-
 	}
 
 	private void showDialog(){

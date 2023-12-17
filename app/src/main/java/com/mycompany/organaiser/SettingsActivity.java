@@ -1,5 +1,7 @@
 package com.mycompany.organaiser;
 
+import android.graphics.drawable.ColorDrawable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,6 +19,9 @@ public class SettingsActivity extends AppCompatActivity {
     Button btNotePad;
     Button btSettings;
     Button btProgress;
+
+    DaoSettings daoSettings;
+    MyDatabaseOpenHelper dataHelper;
     ListViewCustomizer listViewCustomizer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initialPreparations(){
+        dataHelper = new MyDatabaseOpenHelper(this);
+        daoSettings = new DaoSettings(dataHelper);
+
+        int color = daoSettings.getByTitle("color").value;
+
         btMenu = findViewById(R.id.bt_navigation_menu);
         btMenu.setOnClickListener(v -> {
             startActivity(new Intent(SettingsActivity.this, MainActivity.class));
@@ -43,18 +53,25 @@ public class SettingsActivity extends AppCompatActivity {
         btProgress = findViewById(R.id.bt_navigation_achievements);
 
         Drawable drawableNavigateFocusButton = getDrawable(R.drawable.shape_view_navigate_focus);
-        drawableNavigateFocusButton.setColorFilter(getResources().getColor(R.color.item_task_main), android.graphics.PorterDuff.Mode.SRC_IN);
+        drawableNavigateFocusButton.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN);
         btSettings.setBackground(drawableNavigateFocusButton);
         btSettings.setTranslationY(-15);
 
         Window window = getWindow();
-        window.setStatusBarColor(getResources().getColor(R.color.item_task_main));
-        window.getDecorView().setBackgroundColor(getResources().getColor(R.color.item_task_main));
-        window.setNavigationBarColor(getResources().getColor(R.color.item_task_main));
+        window.setStatusBarColor(color);
+        window.getDecorView().setBackgroundColor(color);
+        window.setNavigationBarColor(color);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(color));
+        }
+
     }
 
     private void launchListView(){
         listView = findViewById(R.id.list_view_settings_activity);
+        // this class responsible for displaying settings
         listViewCustomizer = new SimpleSetupListView(this, listView);
         listViewCustomizer.launchListView();
     }

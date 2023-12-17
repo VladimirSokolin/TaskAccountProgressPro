@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.*;
 import android.widget.*;
@@ -18,6 +19,8 @@ import java.util.*;
 
 import java.text.*;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 public class NewTaskActivity extends AppCompatActivity implements ColorListener {
 	
 	EditText etTitle;
@@ -29,6 +32,7 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 
 	GridView gridView;
 	DaoTask daoTask;
+	DaoSettings daoSettings;
 	Task task;
 	int color;
 	boolean isEdit = false;
@@ -42,19 +46,23 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_task);
 
+		MyDatabaseOpenHelper dataHelper = new MyDatabaseOpenHelper(this);
+		daoSettings = new DaoSettings(dataHelper);
+		int colorScreen = daoSettings.getByTitle("color").value;
 
 		toolbar = findViewById(R.id.toolbar_new_task_activity);
 		setSupportActionBar(toolbar);
 
 		ActionBar actionBar = getSupportActionBar();
 		if(actionBar != null){
+			actionBar.setBackgroundDrawable(new ColorDrawable(colorScreen));
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
 		Window window = getWindow();
-		window.getDecorView().setBackgroundColor(getResources().getColor(R.color.item_task_main));
-		window.setStatusBarColor(getResources().getColor(R.color.item_task_main));
-		window.setNavigationBarColor(getResources().getColor(R.color.item_task_main));
+		window.getDecorView().setBackgroundColor(colorScreen);
+		window.setStatusBarColor(colorScreen);
+		window.setNavigationBarColor(colorScreen);
 
 
 
@@ -66,7 +74,7 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 		etDescription = findViewById(R.id.et_description);
 		gridView = findViewById(R.id.gv_colors_new_task_activity);
 
-		daoTask = new DaoTask(new MyDatabaseOpenHelper(this));
+		daoTask = new DaoTask(dataHelper);
 
 		Intent intent = getIntent();
 		long id = intent.getLongExtra("id", 0);
@@ -127,7 +135,7 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 				LinearLayout linear = (LinearLayout) layout.findViewById(R.id.layout_dialog_fast_note);
 				if(linear != null) {
 					GradientDrawable gradientDrawable = new GradientDrawable();
-					gradientDrawable.setColor(this.getResources().getColor(R.color.item_task_main));
+					gradientDrawable.setColor(colorScreen);
 					gradientDrawable.setCornerRadius(30);
 					linear.setBackground(gradientDrawable);
 				}
@@ -148,8 +156,26 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 						AbstractItemGridView item = (AbstractItemGridView) parent.getItemAtPosition(position);
 						if(item instanceof SettingItem){
-							DialogChooseColor dialogChooseColor = new DialogChooseColor();
-							dialogChooseColor.show(getSupportFragmentManager(), "dialogChooseColor");
+							AmbilWarnaDialog warnaDialog = new AmbilWarnaDialog(NewTaskActivity.this, 0xff0000ff, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+								@Override
+								public void onCancel(AmbilWarnaDialog dialog) {
+									dialog.getDialog().cancel();
+								}
+								@Override
+								public void onOk(AmbilWarnaDialog dialog, int color) {
+									setColor(color);
+									drawable.setColor(color);
+									tvCurrentColor.setBackgroundDrawable(drawable);
+									list.remove(item);
+									ColorItem ci = new ColorItem(color);
+									list.add(ci);
+									list.add(item);
+									adapter.notifyDataSetChanged();
+								}
+							});
+							warnaDialog.show();
+							/*DialogChooseColor dialogChooseColor = new DialogChooseColor();
+							dialogChooseColor.show(getSupportFragmentManager(), "dialogChooseColor");*/
 						} else{
 							setColor(item.getColor());
 							drawable.setColor(item.getColor());

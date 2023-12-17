@@ -31,14 +31,18 @@ public class DialogFastNoteCreate {
     FastNote fastNote;
     ArrayList<RemindersFastNote> reminders;
     int yearV, monthV, dayV;
-    public DialogFastNoteCreate(Context context, FastNoteManager noteManager){
+    int color;
+    public DialogFastNoteCreate(Context context, FastNoteManager noteManager, int color){
         this.context = context;
         this.noteManager = noteManager;
+        this.color = color;
     }
 
-    public DialogFastNoteCreate(Context context, FastNoteManager noteManager, FastNote fastNote){
-        this(context, noteManager);
+    public DialogFastNoteCreate(Context context, FastNoteManager noteManager, FastNote fastNote, int color){
+        this.context = context;
+        this.noteManager = noteManager;
         this.fastNote = fastNote;
+        this.color = color;
     }
 
     public void showDialog(){
@@ -60,7 +64,7 @@ public class DialogFastNoteCreate {
         LinearLayout linear = (LinearLayout) contentView.findViewById(R.id.layout_dialog_fast_note);
         if(linear != null) {
             GradientDrawable gradientDrawable = new GradientDrawable();
-            gradientDrawable.setColor(context.getResources().getColor(R.color.item_task_main));
+            gradientDrawable.setColor(color);
             gradientDrawable.setCornerRadius(30);
             linear.setBackground(gradientDrawable);
         }

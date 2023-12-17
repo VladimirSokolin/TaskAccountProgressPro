@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="@android:style/Theme.Holo.Light"/>
+
+    <style name="FullScreenDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+      <item name="android:windowNoTitle">false</item>
+      <item name="android:windowFullscreen">true</item>
+        <!-- Другие параметры стиля, если нужно -->
+    </style>
 </resources>

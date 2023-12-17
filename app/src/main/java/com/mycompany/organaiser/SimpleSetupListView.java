@@ -5,31 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 public class SimpleSetupListView implements ListViewCustomizer {
 
+    /**
+     * This class responsible for managing ListView for {@link SettingsActivity}*/
+
+    /**
+     * listener catches a click on the setting and transfers further
+     * execution of the settings to a separate class - {@link SettingsPerform} */
     View.OnClickListener listener;
     private UniversalAdapter<Setting> universalAdapter;
     private ViewCreater viewCreater;
     private ArrayList<Setting> settings;
     private ListView listView;
+
     public SimpleSetupListView(Context context, ListView listView) {
         this.listView = listView;
-        listener = (v) -> {
-            TextView tv = v.findViewById(R.id.tv_title_settings);
-            if(tv.getText().equals("Set color of app")) {
-                DialogChooseColor dialog = new DialogChooseColor();
-            }
-            /* It’s very strange that I need to put the dialogue inside:
-
-            PRDialog prDialog = new PRDialog(context, R.layout.dialog_new_task_color);
-            PickColorPRDialog colorDialog = new PickColorPRDialog(context);
-            colorDialog.setDialog(prDialog);
-            prDialog.setPreparer(colorDialog);
-            prDialog.showDialog();*/
-        };
+        listener = new SettingsPerform(context); // this class contents logic of settings
         viewCreater = (position, convertView, parent, object) -> {
             Setting setting = (Setting) object;
             View view = LayoutInflater.from(context).inflate(R.layout.item_settings, parent, false);
@@ -46,8 +39,8 @@ public class SimpleSetupListView implements ListViewCustomizer {
         };
 
         settings = new ArrayList<>();
-        settings.add(new Setting("Set color of app", "This setting will change the color of the app"));
-        settings.add(new Setting("Set size text of app", "This setting will change the size of the text"));
+        settings.add(new Setting("Set color of app", "This setting will change the color of the app", 1));
+        settings.add(new Setting("Set size text of app", "This setting will change the size of the text", 1));
         universalAdapter = new UniversalAdapter<>(context, R.layout.item_settings, settings, viewCreater);
     }
 

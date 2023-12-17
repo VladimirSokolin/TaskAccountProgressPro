@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 	SetOfEntities setEntities;
 	MyDatabaseOpenHelper dataHelper;
 	DaoTask daoTask;
+	DaoSettings daoSettings;
 	DaoFastNote daoFastNote;
 	ListAdapter mAdapter;
 	AdapterFastNote adapterFastNote;
@@ -65,10 +66,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main);
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		dataHelper = new MyDatabaseOpenHelper(this);
+		daoSettings = new DaoSettings(dataHelper);
 
-		getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.item_task_main));
-		getWindow().setStatusBarColor(getResources().getColor(R.color.item_task_main));
-		getWindow().setNavigationBarColor(getResources().getColor(R.color.item_task_main));
+		int color = daoSettings.getByTitle("color").value;
+
+		getWindow().getDecorView().setBackgroundColor(color);
+		getWindow().setStatusBarColor(color);
+		getWindow().setNavigationBarColor(color);
 
 
 
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 		SimpleDateFormat sdfDayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault());
 		String currentDay = sdf.format(yesterdayDate);
 		
-		dataHelper = new MyDatabaseOpenHelper(this);
+
 		
 		daoCommit = new DaoOrganaiserLearn(dataHelper);
 		daoTask = new DaoTask(dataHelper);
@@ -99,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
 		btMenu = findViewById(R.id.bt_navigation_menu);
 		Drawable drawableNavigateFocusButton = getDrawable(R.drawable.shape_view_navigate_focus);
-		drawableNavigateFocusButton.setColorFilter(getResources().getColor(R.color.item_task_main), android.graphics.PorterDuff.Mode.SRC_IN);
+		drawableNavigateFocusButton.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN);
 		btMenu.setBackground(drawableNavigateFocusButton);
 		btMenu.setTranslationY(-15);
 
@@ -135,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerViewFastNotes.setLayoutManager(layoutManager);
 		//set click listener on item of recycler
 		adapterFastNote.setOnClickNoteListener ( fn -> {
-			DialogFastNoteCreate dialog = new DialogFastNoteCreate(this, fastNoteManager, fn);
+			DialogFastNoteCreate dialog = new DialogFastNoteCreate(this, fastNoteManager, fn,color);
 			dialog.setOnUpdateListener( (object, isRedact)->{
 				Thread thread = new Thread(()->{
 					ArrayList<FastNote> currentListAfterEdit = fastNoteManager.getAllCurrentDate();
@@ -173,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 		btAddFastNote.setOnClickListener(view -> {
-			dialogFastNoteCreate = new DialogFastNoteCreate(this, fastNoteManager);
+			dialogFastNoteCreate = new DialogFastNoteCreate(this, fastNoteManager, color);
 			dialogFastNoteCreate.setOnUpdateListener( (object, isRedact)->{
 				Thread thread = new Thread(()->{
 					ArrayList<FastNote> currentListAfterEdit = fastNoteManager.getAllCurrentDate();
