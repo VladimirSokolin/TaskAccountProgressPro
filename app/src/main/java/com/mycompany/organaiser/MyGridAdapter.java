@@ -5,6 +5,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -22,12 +23,19 @@ class MyGridAdapter extends ArrayAdapter<Task> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.entity, parent, false);
+
         Task task = (Task)getItem(position);
         TextView rtv = view.findViewById(R.id.entityTextView1);
+
+        rtv.setElevation(20);
+        rtv.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+
         if(task instanceof TaskDayDeal){
             rtv.setText(task.nameTask);
-        }else{
-            rtv.setText("📝\n" + task.nameTask);
+        } else if (task instanceof SettingAdapterTask) {
+            rtv.setText("⚙️");
+        } else {
+            rtv.setText("📝" + task.nameTask);
         }
 
 

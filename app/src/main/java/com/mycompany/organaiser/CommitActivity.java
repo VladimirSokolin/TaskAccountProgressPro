@@ -79,6 +79,14 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 		daoTimeSpace = new DaoTimeSpace(dataHelper);
 		daoDayRouting = new DaoDayRouting(dataHelper);
 
+		DaoSettings daoSettings = new DaoSettings(dataHelper);
+		int colorSettings = daoSettings.getByTitle("color").value;
+
+		Window window = getWindow();
+		window.setBackgroundDrawable(new ColorDrawable(colorSettings));
+		window.setNavigationBarColor(colorSettings);
+		window.setStatusBarColor(colorSettings);
+
 		currentDayRouting = setCurrentDayRouting();
 		
 		tvTimer = findViewById(R.id.tv_timer);
@@ -93,7 +101,7 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 
 		btTracker = findViewById(R.id.bt_navigation_tracker);
 		Drawable drawableNavigateFocusButton = getDrawable(R.drawable.shape_view_navigate_focus);
-		drawableNavigateFocusButton.setColorFilter(getResources().getColor(R.color.item_task_main), android.graphics.PorterDuff.Mode.SRC_IN);
+		drawableNavigateFocusButton.setColorFilter(colorSettings, android.graphics.PorterDuff.Mode.SRC_IN);
 		btTracker.setBackground(drawableNavigateFocusButton);
 		btTracker.setTranslationY(-15);
 
@@ -153,7 +161,10 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 					popupMenu.show();
 
 
-				} else {
+				} else if(pickTask instanceof SettingAdapterTask){
+					DayDealDialog dialog = new DayDealDialog();
+					dialog.show(getFragmentManager(), "newDeal");
+				}else {
 					Toast.makeText(CommitActivity.this, "The accounting task is edited in the main menu", Toast.LENGTH_LONG).show();
 				}
 				return false;
@@ -165,14 +176,20 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 
 			@Override
 			public void onItemClick(AdapterView<?> l, View view, int position, long id){
-				if(!clickTaskDealForRedact) {
-					if(!isPress){
-						startTime = System.currentTimeMillis();
-						task = (Task) l.getItemAtPosition(position);
+				Task t = (Task) l.getItemAtPosition(position);
+				if( t instanceof SettingAdapterTask){
+					DayDealDialog dialog = new DayDealDialog();
+					dialog.show(getFragmentManager(), "newDeal");
+				} else {
+					if (!clickTaskDealForRedact) {
+						if (!isPress) {
+							startTime = System.currentTimeMillis();
+							task = (Task) l.getItemAtPosition(position);
+						}
+						startProcessAccounting(task, startTime, view);
 					}
-					startProcessAccounting(task, startTime, view);
+					clickTaskDealForRedact = false;
 				}
-				clickTaskDealForRedact = false;
 			}
 		});
 
@@ -194,13 +211,15 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 
 
 	private void update(){
+
 		listTasks = daoTask.getAllTask();
 		listDeals = daoDeal.getAll();
 		
 		for(TaskDayDeal deal : listDeals){
 			listTasks.add(deal);
 		}
-		
+		SettingAdapterTask setting = new SettingAdapterTask(); //item for setting in grid view
+		listTasks.add(setting);
 		mListAdapter = new MyGridAdapter(this, listTasks);
 		
 		Intent intent = getIntent();
@@ -407,7 +426,7 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 	@Override
 	public void updateAdapter(Object task, boolean isRedact){
 		if(!isRedact){
-			listTasks.add((Task)task);
+			listTasks.add(listTasks.size()-1,(Task)task);
 		}
 		mGridView.invalidateViews();
 	}
@@ -428,10 +447,6 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 			isPress = false;
 			if (view != null) {
 				view.setBackgroundColor(getResources().getColor(android.R.color.white));
-
-				ObjectAnimator scaleTextSize = ObjectAnimator.ofFloat(tvTimer, "textSize", 16f);
-				scaleTextSize.setDuration(1000); // Продолжительность анимации в миллисекундах
-				scaleTextSize.start();
 			}
 
 		} else {
@@ -441,9 +456,6 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 			if(view != null) {
 				view.setBackgroundColor(getResources().getColor(android.R.color.tertiary_text_light));
 
-				ObjectAnimator scaleTextSize = ObjectAnimator.ofFloat(tvTimer, "textSize", 24f);
-				scaleTextSize.setDuration(1000); // Продолжительность анимации в миллисекундах
-				scaleTextSize.start();
 			}
 			if (!(task instanceof TaskDayDeal)) {
 				commit = new Commit((int) task.currentCount, startTime);

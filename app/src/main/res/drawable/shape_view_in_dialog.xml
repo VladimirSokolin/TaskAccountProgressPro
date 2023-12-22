@@ -6,5 +6,5 @@
 		  android:radius="10dp"/>
 	  
 	<solid
-		  android:color="@color/views_in_dialog" />
+		  android:color="@color/views_in_dialog2" />
 </shape>

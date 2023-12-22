@@ -10,6 +10,7 @@
     <color name="tvStopTimeDialog">#8773ED</color>
 
     <color name="layout_dialog_commit_complete">#9E7154</color>
+    <color name="views_in_dialog2">#86FFFFFF</color>
     <color name="views_in_dialog">#30FFFFFF</color>
     <color name="views_is_focused">#10FFFFFF</color>
     <color name="pressed_views_in_dialog">#80555555</color>

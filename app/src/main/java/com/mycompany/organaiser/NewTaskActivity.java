@@ -218,7 +218,10 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 			}
 			if(tvDateEnd != null) task.dateEndPlane = tvDateEnd.getText().toString();
 			task.description = etDescription.getText().toString();
-			task.color = color;
+			if(color != 0){
+				task.color = color;
+			} else task.color = Color.GRAY;
+
 
 			if(isEdit){
 				task.computeBeforeUpdate();
@@ -254,13 +257,13 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 				drawable.setShape(GradientDrawable.RECTANGLE);
 				drawable.setCornerRadius(10);
 				drawable.setColor(item.color);
-				//set effect up one
+
 				drawable.setGradientType(GradientDrawable.RADIAL_GRADIENT);
 				drawable.setGradientCenter(0.5f, 0.5f);
 
 				colorView.setBackground(drawable);
-				colorView.setElevation(10);
-				colorView.setTranslationZ(5);
+				colorView.setElevation(20);
+				colorView.setTranslationZ(10);
 				colorView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
 
 				if(item.symbol != null) {
