@@ -35,6 +35,7 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 	DaoSettings daoSettings;
 
 	Setting startHourTrackerSetting;
+	Setting spaceTrackerSetting;
 	Button btDealAdd;
 	TextView tvTimer;
 	TextView tvFactNote;
@@ -57,6 +58,7 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 	DayRouting currentDayRouting;
 	DayRoutingPopupMenuInterface popupMenuDayRouting;
 	int numberStartHour;
+	int numberDivisions;
 
 	TimeSpaceCommiter commiter;
 	DialogConfirmationer confirmationer;
@@ -94,6 +96,8 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 		int colorSettings = daoSettings.getByTitle("color").value;
 		startHourTrackerSetting = daoSettings.getByTitle("time");
 		numberStartHour = startHourTrackerSetting.value;
+		spaceTrackerSetting = daoSettings.getByTitle("space");
+		numberDivisions = spaceTrackerSetting.value;
 
 		Window window = getWindow();
 		window.setBackgroundDrawable(new ColorDrawable(colorSettings));
@@ -104,6 +108,7 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 
 		trackerView = findViewById(R.id.tracker_view);
 		trackerView.setHourStart(numberStartHour);
+		trackerView.setNumberDivisions(numberDivisions);
 		tvTimer = findViewById(R.id.tv_timer);
 		
 		tvFactNote = findViewById(R.id.tv_fact_note);
@@ -568,7 +573,10 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 	@Override
 	protected void onStop() {
 		startHourTrackerSetting.value = trackerView.getHourStart();
+		spaceTrackerSetting.value = trackerView.getNumberDivisions();
+
 		daoSettings.update(startHourTrackerSetting);
+		daoSettings.update(spaceTrackerSetting);
 		super.onStop();
 	}
 }

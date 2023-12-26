@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 			finish();
 		});
 
-		listFastNotes = fastNoteManager.getAllCurrentDate();
+		listFastNotes = fastNoteManager.getAllUpToThisDate();
 		adapterFastNote = new AdapterFastNote(listFastNotes);
 		recyclerViewFastNotes.setAdapter(adapterFastNote);
 
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 			DialogFastNoteCreate dialog = new DialogFastNoteCreate(this, fastNoteManager, fn,color);
 			dialog.setOnUpdateListener( (object, isRedact)->{
 				Thread thread = new Thread(()->{
-					ArrayList<FastNote> currentListAfterEdit = fastNoteManager.getAllCurrentDate();
+					ArrayList<FastNote> currentListAfterEdit = fastNoteManager.getAllUpToThisDate();
 					listFastNotes.clear();
 					listFastNotes.addAll(currentListAfterEdit);
 				});
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
 			dialogFastNoteCreate = new DialogFastNoteCreate(this, fastNoteManager, color);
 			dialogFastNoteCreate.setOnUpdateListener( (object, isRedact)->{
 				Thread thread = new Thread(()->{
-					ArrayList<FastNote> currentListAfterEdit = fastNoteManager.getAllCurrentDate();
+					ArrayList<FastNote> currentListAfterEdit = fastNoteManager.getAllUpToThisDate();
 					listFastNotes.clear();
 					listFastNotes.addAll(currentListAfterEdit);
 				});

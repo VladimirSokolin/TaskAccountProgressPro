@@ -31,4 +31,8 @@ public class Setting {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public static String insertIfNotExist(Setting setting){
+        return "INSERT OR IGNORE INTO " + NAME_TABLE + "(" + TITLE + ", " + DESCRIPTION + ", " + VALUE + ") VALUES ('"+ setting.title +"', '" + setting.description +"', "+ setting.value +")";
+    }
 }

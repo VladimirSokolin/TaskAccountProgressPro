@@ -72,6 +72,23 @@ public class DaoRemindersFastNote {
         return remindersFastNotes;
     }
 
+    public ArrayList<RemindersFastNote> getAllUpToThisDate(){
+        SQLiteDatabase db = dataHelper.getReadableDatabase();
+        ArrayList<RemindersFastNote> remFastNotes = new ArrayList<RemindersFastNote>();
+        String selection = RemindersFastNote.DATE + " <= ?";
+        String[] selectionArgs = {String.valueOf(getEndOfDay())};
+        Cursor cursor = db.query(RemindersFastNote.NAME_TABLE, null, selection, selectionArgs, null, null, null);
+        while(cursor.moveToNext()){
+            RemindersFastNote remindersFastNote = new RemindersFastNote();
+            remindersFastNote.id = cursor.getLong(0);
+            remindersFastNote.idFastNote = cursor.getLong(1);
+            remindersFastNote.date = cursor.getLong(2);
+            remFastNotes.add(remindersFastNote);
+        }
+        cursor.close();
+        return remFastNotes;
+    }
+
     private long getStartOfDay() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -88,5 +105,7 @@ public class DaoRemindersFastNote {
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTimeInMillis();
     }
+
+
 
 }

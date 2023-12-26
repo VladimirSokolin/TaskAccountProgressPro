@@ -65,6 +65,20 @@ public class FastNoteManager {
         return fastNotes;
     }
 
+    public ArrayList<FastNote> getAllUpToThisDate(){
+        ArrayList<RemindersFastNote> remindersAllUpToThisDate = daoReminders.getAllUpToThisDate();
+        ArrayList<Long> ids = new ArrayList<>();
+        for(RemindersFastNote reminder : remindersAllUpToThisDate) {
+            ids.add(reminder.idFastNote);
+        }
+        ArrayList<FastNote> fastNotes = daoFastNote.getAllById(ids);
+        for(FastNote fastNote : fastNotes) {
+            ArrayList<RemindersFastNote> listReminders = daoReminders.getAllById(fastNote.id);
+            fastNote.reminders = listReminders;
+        }
+        return fastNotes;
+    }
+
     public void delete(long id) {
         daoFastNote.delete(id);
         daoReminders.deleteAllByIdNote(id);

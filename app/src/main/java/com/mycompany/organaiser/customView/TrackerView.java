@@ -109,6 +109,9 @@ public class TrackerView extends View {
   public int getHourStart(){
     return  scalePlane.getHourStart();
   }
+  public int getNumberDivisions(){
+    return scaleFact.getNumberDivisions();
+  }
 
   public void setTimeSpacesPlane(ArrayList<TimeSpace> timeSpaces){
       timeSpacesPlane = timeSpaces;
