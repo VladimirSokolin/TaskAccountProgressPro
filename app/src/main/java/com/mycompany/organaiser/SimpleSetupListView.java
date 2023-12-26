@@ -17,11 +17,13 @@ public class SimpleSetupListView implements ListViewCustomizer {
     View.OnClickListener listener;
     private UniversalAdapter<Setting> universalAdapter;
     private ViewCreater viewCreater;
+
     private ArrayList<Setting> settings;
     private ListView listView;
 
     public SimpleSetupListView(Context context, ListView listView) {
         this.listView = listView;
+
         listener = new SettingsPerform(context); // this class contents logic of settings
         viewCreater = (position, convertView, parent, object) -> {
             Setting setting = (Setting) object;
@@ -38,9 +40,9 @@ public class SimpleSetupListView implements ListViewCustomizer {
             return view;
         };
 
-        settings = new ArrayList<>();
+        settings = new ArrayList<>(); // If you want to change name of settings, change this name and in {@link SettingsPerform} class
         settings.add(new Setting("Set color of app", "This setting will change the color of the app", 1));
-        settings.add(new Setting("Set size text of app", "This setting will change the size of the text", 1));
+        settings.add(new Setting("Set start time of scale", "Set what hour the timeline will start from", 1));
         universalAdapter = new UniversalAdapter<>(context, R.layout.item_settings, settings, viewCreater);
     }
 

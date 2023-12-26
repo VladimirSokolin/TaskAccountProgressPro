@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 import static androidx.core.content.ContextCompat.startActivity;
@@ -22,6 +23,7 @@ public class SettingsPerform implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+        color = daoSettings.getByTitle("color").value;
         TextView tv = v.findViewById(R.id.tv_title_settings);
         if(tv.getText().equals("Set color of app")) {
             Setting setting = daoSettings.getByTitle("color");
@@ -32,9 +34,13 @@ public class SettingsPerform implements View.OnClickListener {
                   context.startActivity(intent);
               }
             });
-            dialogSettingColorApp.show();
+            dialogSettingColorApp.show();/**/
+        } else if(tv.getText().equals("Set start time of scale")) {
+            Setting setting = daoSettings.getByTitle("time");
+            DialogSettingTime dialogSettingTime = new DialogSettingTime(context, R.style.FullScreenDialogTheme, setting, color);
+            dialogSettingTime.show();
 
-            /**/
         }
+
     }
 }

@@ -113,8 +113,8 @@ public class TimeSpace {
 		this.timeStop = stop;
 		this.timeMlStop = conversationStringToMl(stop);
 	}
-	
 
-	
-	
+	public int getColor() {
+		return color;
+	}
 }

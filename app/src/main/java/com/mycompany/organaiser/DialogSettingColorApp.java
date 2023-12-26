@@ -11,7 +11,6 @@ import android.widget.TextView;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class DialogSettingColorApp extends Dialog {
-
   private final View screenDemonstrationView;
 
   interface ListenerOk {

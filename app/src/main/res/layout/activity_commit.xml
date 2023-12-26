@@ -6,6 +6,7 @@
 	android:padding="10dp"
 	android:orientation="vertical">
 	<com.mycompany.organaiser.customView.TrackerView
+			android:id="@+id/tracker_view"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_weight="10"/>
@@ -44,8 +45,8 @@
 		android:layout_height="wrap_content"
 		android:text="Start deal"
 		android:background="@drawable/shape_view_in_dialog"
-		android:layout_margin="5dp"
-		android:padding="10dp"
+		android:layout_marginTop="5dp"
+		android:padding="5dp"
 		android:gravity="center"
 		android:textSize="16sp"
 		android:textStyle="bold"
@@ -54,7 +55,7 @@
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_weight="7">
+		android:layout_weight="8">
 
 		<GridView
 			android:id="@+id/grid_layout_task"
@@ -65,18 +66,10 @@
 			android:layout_marginBottom="10dp"
 			android:numColumns="4"/>
 
-		
-		<ImageButton
-			android:layout_width="60dp"
-			android:layout_height="60dp"
-			android:background="@drawable/fab"
-			android:layout_gravity = "bottom|end"
-			android:layout_marginRight = "20dp"
-			android:layout_marginBottom = "20dp"
-			android:elevation="10dp"
-			android:onClick = "clickFAB"/>
 	</FrameLayout>
-	<include layout="@layout/layout_navigate_buttons"/>
+	<include layout="@layout/layout_navigate_buttons"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
 
 </LinearLayout>
 

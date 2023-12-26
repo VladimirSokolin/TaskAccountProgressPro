@@ -1,6 +1,7 @@
 package com.mycompany.organaiser;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,20 +31,23 @@ class MyGridAdapter extends ArrayAdapter<Task> {
         rtv.setElevation(20);
         rtv.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
 
+        drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setCornerRadius(25);
+        drawable.setColor(task.color);
+        rtv.setBackground(drawable);
+
         if(task instanceof TaskDayDeal){
             rtv.setText(task.nameTask);
         } else if (task instanceof SettingAdapterTask) {
-            rtv.setText("⚙️");
+            rtv.setTextSize(30);
+            rtv.setText("➕");
+            drawable.setColor(Color.LTGRAY);
         } else {
             rtv.setText("📝" + task.nameTask);
         }
 
 
-        drawable = new GradientDrawable();
-        drawable.setShape(GradientDrawable.RECTANGLE);
-        drawable.setCornerRadius(10);
-        drawable.setColor(task.color);
-        rtv.setBackground(drawable);
         return view;
     }
 }

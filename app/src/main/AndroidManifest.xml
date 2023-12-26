@@ -39,7 +39,8 @@
         <activity
             android:name=".CommitActivity"
             android:exported="true"
-            android:label="Timer Task">
+            android:label="Timer Task"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

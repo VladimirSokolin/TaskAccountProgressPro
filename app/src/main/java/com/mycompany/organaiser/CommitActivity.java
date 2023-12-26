@@ -16,10 +16,15 @@ import android.widget.AdapterView.*;
 import java.text.*;
 import android.text.method.*;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-public class CommitActivity extends Activity implements CommitCompleteInterface, DialogSetDayRoutingTemplate.SetRoutingDialogListener, AdapterUpdateable {
+import com.mycompany.organaiser.customView.TrackerView;
+
+
+public class CommitActivity extends AppCompatActivity implements CommitCompleteInterface, DialogSetDayRoutingTemplate.SetRoutingDialogListener, AdapterUpdateable {
 	
 	String currentDay;
+	TrackerView trackerView;
 	ListAdapter mListAdapter;
 	GridView mGridView;
 	DaoTask daoTask;
@@ -27,6 +32,9 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 	DaoOrganaiserLearn daoCommit;
 	DaoTimeSpace daoTimeSpace;
 	DaoDayRouting daoDayRouting;
+	DaoSettings daoSettings;
+
+	Setting startHourTrackerSetting;
 	Button btDealAdd;
 	TextView tvTimer;
 	TextView tvFactNote;
@@ -48,6 +56,7 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 	int idSendedTask;
 	DayRouting currentDayRouting;
 	DayRoutingPopupMenuInterface popupMenuDayRouting;
+	int numberStartHour;
 
 	TimeSpaceCommiter commiter;
 	DialogConfirmationer confirmationer;
@@ -55,13 +64,15 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 
 	Timekeeper timekeeper;
 	long startTime = -1;
+	ArrayList<TimeSpace> listFactTimeSpaces;
 
+	Handler invalidateTrackerHandler = new Handler(Looper.getMainLooper());
+
+	boolean isUpdateTracker = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState){	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_commit);
-		
-		getActionBar().hide();
 
 		timekeeper = new Timekeeper(this);
 
@@ -78,9 +89,11 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 		daoCommit = new DaoOrganaiserLearn(dataHelper);
 		daoTimeSpace = new DaoTimeSpace(dataHelper);
 		daoDayRouting = new DaoDayRouting(dataHelper);
+		daoSettings = new DaoSettings(dataHelper);
 
-		DaoSettings daoSettings = new DaoSettings(dataHelper);
 		int colorSettings = daoSettings.getByTitle("color").value;
+		startHourTrackerSetting = daoSettings.getByTitle("time");
+		numberStartHour = startHourTrackerSetting.value;
 
 		Window window = getWindow();
 		window.setBackgroundDrawable(new ColorDrawable(colorSettings));
@@ -88,7 +101,9 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 		window.setStatusBarColor(colorSettings);
 
 		currentDayRouting = setCurrentDayRouting();
-		
+
+		trackerView = findViewById(R.id.tracker_view);
+		trackerView.setHourStart(numberStartHour);
 		tvTimer = findViewById(R.id.tv_timer);
 		
 		tvFactNote = findViewById(R.id.tv_fact_note);
@@ -104,6 +119,12 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 		drawableNavigateFocusButton.setColorFilter(colorSettings, android.graphics.PorterDuff.Mode.SRC_IN);
 		btTracker.setBackground(drawableNavigateFocusButton);
 		btTracker.setTranslationY(-15);
+
+		btSettings = findViewById(R.id.bt_navigation_settings);
+		btSettings.setOnClickListener(view ->{
+			startActivity(new Intent(this, SettingsActivity.class));
+			finish();
+		});
 
 		btMenu = findViewById(R.id.bt_navigation_menu);
 		btMenu.setOnClickListener(view ->{
@@ -206,6 +227,7 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 	protected void onStart(){
 		update();
 		loadAndSetPlaneRoute();
+		startInvalidatingTracker();
 		super.onStart();
 	}
 
@@ -333,6 +355,7 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 			timeSpaceFact.color = task.color;
 			
 			daoTimeSpace.addTimeSpace(timeSpaceFact, currentDayRouting.id);
+			listFactTimeSpaces.add(timeSpaceFact);
 			
 			commiter.commitTimeSpace(timeSpaceFact, tvFactNote);
 			
@@ -367,6 +390,7 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 
 		if(currentDayRouting != null){
 			currentDayRouting.listOfTimeSpaces = daoTimeSpace.getAllTimeSpaceOfDayIsPlane(currentDayRouting.id);
+			trackerView.setTimeSpacesPlane(currentDayRouting.listOfTimeSpaces);
 			tvResume.setText("");
 			commiter.rangeAndCommitAllTimeSpaces(currentDayRouting.listOfTimeSpaces, tvResume);
 		}
@@ -375,8 +399,9 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 	
 	void loadAndSetFactTimesCurrentDay(String currentDay){
 		
-		ArrayList<TimeSpace> list = daoTimeSpace.getAllTimeSpaceOfDayIsFact(currentDay);
-		for(TimeSpace ts : list){
+		listFactTimeSpaces = daoTimeSpace.getAllTimeSpaceOfDayIsFact(currentDay);
+		trackerView.setTimeSpacesFact(listFactTimeSpaces);
+		for(TimeSpace ts : listFactTimeSpaces){
 			commiter.commitTimeSpace(ts, tvFactNote);
 		}
 	}
@@ -432,6 +457,7 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 	}
 
 	private void startProcessAccounting(Task task,long startTime, View view ){
+
 		if (isPress) {
 			if (task instanceof TaskDayDeal) {
 				TimeSpace ts = task.completeDeal();
@@ -448,7 +474,6 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 			if (view != null) {
 				view.setBackgroundColor(getResources().getColor(android.R.color.white));
 			}
-
 		} else {
 
 			task.compute(startTime); // первый подсчет
@@ -513,6 +538,11 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 
 		}
 
+
+
+
+
+
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -522,5 +552,23 @@ public class CommitActivity extends Activity implements CommitCompleteInterface,
 
 			}
 		};
+	}
+	private void startInvalidatingTracker() {
+
+		Runnable runnable = new Runnable() {
+			@Override public void run() {
+
+				invalidateTrackerHandler.postDelayed(this, 10000);
+				trackerView.invalidate();
+			}
+		};
+		invalidateTrackerHandler.postDelayed(runnable, 10000);
+	}
+
+	@Override
+	protected void onStop() {
+		startHourTrackerSetting.value = trackerView.getHourStart();
+		daoSettings.update(startHourTrackerSetting);
+		super.onStop();
 	}
 }
