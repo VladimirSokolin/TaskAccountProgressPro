@@ -8,36 +8,55 @@ import android.view.*;
 
 public class ProgressActivity extends Activity {
 
-	ListView listView;
+	GridView gridView;
 	MyDatabaseOpenHelper dataHelper;
 	DaoTask daoTask;
+	DaoSettings daoSettings;
 	ArrayList<Task> listCompleteTask;
+
+	Button btMenu;
+	Button btTracker;
+	Button btNotePad;
+	Button btSettings;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_progress);
-		
+
+		initNavigateButtons();
+
 		dataHelper = new MyDatabaseOpenHelper(this);
 		daoTask = new DaoTask(dataHelper);
-		
+		daoSettings = new DaoSettings(dataHelper);
+
+		int color = daoSettings.getByTitle("color").value;
+
+		getWindow().getDecorView().setBackgroundColor(color);
+		getWindow().setStatusBarColor(color);
+		getWindow().setNavigationBarColor(color);
+
 	}
 	
 	class MyAdapter extends ArrayAdapter<Task>{
 		
 		MyAdapter(Context context, ArrayList list){
-			super(context, R.layout.task_item, list);
+			super(context, R.layout.item_achive, list);
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 		
 			
-			View view = LayoutInflater.from(getContext()).inflate(R.layout.task_item, parent, false);
+			View view = LayoutInflater.from(getContext()).inflate(R.layout.item_achive, parent, false);
 			Task task  = getItem(position);
-			TextView tv = view.findViewById(R.id.tv_name_task_main_activity);
-			tv.setText(task.nameTask);
-			
+			TextView tvTitle = view.findViewById(R.id.textView);
+			TextView tvCount = view.findViewById(R.id.textView2);
+			if(task != null){
+				tvTitle.setText(task.nameTask);
+				tvCount.setText(String.valueOf(task.currentCount));
+			}
+
 			return view;
 		}
 		
@@ -54,9 +73,31 @@ public class ProgressActivity extends Activity {
 	
 	void update(){
 		listCompleteTask = daoTask.getAllCompleteTask();
-		listView = findViewById(R.id.list_complete_task_progress_activity);
+		gridView = findViewById(R.id.list_complete_task_progress_activity);
 		MyAdapter mAdapter = new MyAdapter(this, listCompleteTask);
-		listView.setAdapter(mAdapter);
+		gridView.setAdapter(mAdapter);
 	}
+
+	void initNavigateButtons(){
+		btSettings = findViewById(R.id.bt_navigation_settings);
+		btSettings.setOnClickListener(view ->{
+			startActivity(new Intent(this, SettingsActivity.class));
+			finish();
+		});
+
+		btMenu = findViewById(R.id.bt_navigation_menu);
+		btMenu.setOnClickListener(view ->{
+			startActivity(new Intent(this, MainActivity.class));
+			finish();
+		});
+
+		btTracker = findViewById(R.id.bt_navigation_tracker);
+		btTracker.setOnClickListener((view)->{
+			startActivity(new Intent(this, CommitActivity.class));
+			finish();
+		});
+	}
+
+
 	
 }

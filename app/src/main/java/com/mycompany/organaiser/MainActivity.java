@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 	Button btMenu;
 	Button btTracker;
 	Button btNotePad;
+	Button btProgress;
 	Button btSettings;
 	OrganaiserDao daoCommit;
 	ArrayList<Task> list;
@@ -114,6 +115,12 @@ public class MainActivity extends AppCompatActivity {
 			finish();
 		});
 		btNotePad = findViewById(R.id.bt_navigation_notePad);
+
+		btProgress = findViewById(R.id.bt_navigation_achievements);
+		btProgress.setOnClickListener((view)->{
+			startActivity(new Intent(this, ProgressActivity.class));
+			finish();
+		});
 
 		btSettings = findViewById(R.id.bt_navigation_settings);
 		btSettings.setOnClickListener((view)->{
@@ -251,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void update(){
-		list = daoTask.getAllTask();
+		list = daoTask.getAllNoCompleteTask();
 		mAdapter = new MyAdapter(MainActivity.this, list);
 		mListView.setAdapter(mAdapter);
 	}

@@ -45,6 +45,7 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 	Button btTracker;
 	Button btNotePad;
 	Button btSettings;
+	Button btProgress;
 	MyDatabaseOpenHelper dataHelper;
 	boolean isPress = false;
 	Commit commit = null;
@@ -128,6 +129,12 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 		btSettings = findViewById(R.id.bt_navigation_settings);
 		btSettings.setOnClickListener(view ->{
 			startActivity(new Intent(this, SettingsActivity.class));
+			finish();
+		});
+
+		btProgress = findViewById(R.id.bt_navigation_achievements);
+		btProgress.setOnClickListener(view ->{
+			startActivity(new Intent(this, ProgressActivity.class));
 			finish();
 		});
 
@@ -239,7 +246,7 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 
 	private void update(){
 
-		listTasks = daoTask.getAllTask();
+		listTasks = daoTask.getAllNoCompleteTask();
 		listDeals = daoDeal.getAll();
 		
 		for(TaskDayDeal deal : listDeals){
@@ -358,11 +365,18 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 			timeSpaceFact.description = description;
 			timeSpaceFact.isFactTime = true;
 			timeSpaceFact.color = task.color;
+
+			if(commit.isStop) {
+				if (checkTimeSpace(commit.timeEndMS)){
+					cutTimeSpaceAndSave(timeSpaceFact);
+				} else {
+					daoTimeSpace.addTimeSpace(timeSpaceFact, currentDayRouting.id);
+					listFactTimeSpaces.add(timeSpaceFact);
+					commiter.commitTimeSpace(timeSpaceFact, tvFactNote);
+				}
+			}
 			
-			daoTimeSpace.addTimeSpace(timeSpaceFact, currentDayRouting.id);
-			listFactTimeSpaces.add(timeSpaceFact);
-			
-			commiter.commitTimeSpace(timeSpaceFact, tvFactNote);
+
 			
 			if(isOk) Toast.makeText(this,"Data successfully saved", Toast.LENGTH_SHORT).show();
 			mGridView.invalidateViews();
@@ -370,6 +384,41 @@ public class CommitActivity extends AppCompatActivity implements CommitCompleteI
 			//commit.toCompleate(page, description, levelAttention);
 			
 		}
+	}
+
+	// to do check: if time space include two days, that to do two time spaces
+	private boolean checkTimeSpace(long stopTime){
+		Calendar startDay = Calendar.getInstance();
+		startDay.setTimeInMillis(startTime);
+		Calendar endDay = Calendar.getInstance();
+		endDay.setTimeInMillis(stopTime);
+		return startDay.get(Calendar.DAY_OF_YEAR) != endDay.get(Calendar.DAY_OF_YEAR);
+	}
+
+	private void cutTimeSpaceAndSave(TimeSpace timeSpace){
+		TimeSpace ts1 = new TimeSpace(timeSpace.nameDeal);
+		ts1.setStartTimeString(timeSpace.timeStart);
+		ts1.setStopTimeString("23:59");
+		ts1.color = timeSpace.color;
+		ts1.description = timeSpace.description;
+		ts1.isFactTime = timeSpace.isFactTime;
+
+		TimeSpace ts2 = new TimeSpace(timeSpace.nameDeal);
+		ts2.setStartTimeString("00:00");
+		ts2.setStopTimeString(timeSpace.timeStop);
+		ts2.color = timeSpace.color;
+		ts2.description = timeSpace.description;
+		ts2.isFactTime = timeSpace.isFactTime;
+
+
+		daoTimeSpace.addTimeSpace(ts1, currentDayRouting.id);
+		daoTimeSpace.addTimeSpace(ts2, currentDayRouting.id);
+
+		listFactTimeSpaces.add(ts1);
+		listFactTimeSpaces.add(ts2);
+
+		commiter.commitTimeSpace(ts1, tvFactNote);
+		commiter.commitTimeSpace(ts2, tvFactNote);
 	}
 
 	void loadAndSetPlaneRoute(long idDayRouting){

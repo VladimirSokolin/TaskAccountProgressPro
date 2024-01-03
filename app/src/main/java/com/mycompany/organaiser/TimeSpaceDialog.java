@@ -42,7 +42,7 @@ public class TimeSpaceDialog extends DialogFragment {
 		daoTask = new DaoTask(dataHelper);
 
 
-		ArrayList<Task> listTasks = daoTask.getAllTask();
+		ArrayList<Task> listTasks = daoTask.getAllNoCompleteTask();
 		listTasks.addAll(daoTaskDayDeal.getAll());
 
 		MyGridAdapter adapter = new MyGridAdapter(getContext(), listTasks);

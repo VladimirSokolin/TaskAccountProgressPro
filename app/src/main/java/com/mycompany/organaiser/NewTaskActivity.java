@@ -242,6 +242,25 @@ public class NewTaskActivity extends AppCompatActivity implements ColorListener 
 		if(id == android.R.id.home){
 			finish();
 		}
+
+		if(id == R.id.delete_menu_new_task_activity){
+			if(task != null && isEdit){
+				daoTask.delete(task.id);
+				finish();
+			} else {
+				Toast.makeText(this, "The task must first be set", Toast.LENGTH_LONG).show();
+			}
+		}
+
+		if(id == R.id.perform_menu_new_task_activity){
+			if(task != null && isEdit){
+				task.isComplete = true;
+				daoTask.update(task);
+				Toast.makeText(this, "Congratulations! we are performed this task", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(this, "The task must first be set", Toast.LENGTH_LONG).show();
+			}
+		}
 	    return super.onOptionsItemSelected(item);
 	}
 	private void launchGridView(GridView gridView) {

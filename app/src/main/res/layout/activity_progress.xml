@@ -3,9 +3,14 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 	
-	<ListView
+	<GridView
 		android:id="@+id/list_complete_task_progress_activity"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
+		android:layout_height="0dp"
+			android:numColumns="3"
+			android:layout_weight="1"
+			android:layout_margin="10dp"/>
+
+	<include layout="@layout/layout_navigate_buttons" />
     
 </LinearLayout>

@@ -63,6 +63,29 @@ public class DaoTask implements OrganaiserDaoTask {
 		db.close();
 		return list;
 	}
+
+	public ArrayList<Task> getAllNoCompleteTask() {
+		SQLiteDatabase db = dataHelper.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + nameOfTable + " WHERE " + entity.IS_COMPLETE+ " = false", null);
+		ArrayList<Task> list = new ArrayList<>();
+		while(cursor.moveToNext()){
+			Task t = new Task();
+			t.id = cursor.getInt(cursor.getColumnIndexOrThrow("id_task"));
+			t.nameTask = cursor.getString(cursor.getColumnIndexOrThrow(entity.NAME_TASK));
+			t.color = cursor.getInt(cursor.getColumnIndexOrThrow(entity.COLOR));
+			t.dateStart = cursor.getString(cursor.getColumnIndexOrThrow(entity.DATE_START));
+			t.dateEndPlane = cursor.getString(cursor.getColumnIndexOrThrow(entity.DATE_END_PLANE));
+			t.description = cursor.getString(cursor.getColumnIndexOrThrow(entity.DESCRIPTION));
+			t.countInDay = cursor.getDouble(cursor.getColumnIndexOrThrow(entity.COUNT_IN_DAY));
+			t.fullCount = cursor.getDouble(cursor.getColumnIndexOrThrow(entity.FULL_COUNT));
+			t.currentCount = cursor.getDouble(cursor.getColumnIndexOrThrow(entity.CURRENT_COUNT));
+			t.dayToComlete = cursor.getDouble(cursor.getColumnIndexOrThrow(entity.DAY_TO_COMPLETE));
+
+			list.add(t);
+		}
+		db.close();
+		return list;
+	}
 	
 	public ArrayList<Task> getAllCompleteTask(){
 		SQLiteDatabase db = dataHelper.getReadableDatabase();
@@ -143,10 +166,10 @@ public class DaoTask implements OrganaiserDaoTask {
 	}
 
 	@Override
-	public boolean delete(long id)
-	{
-		// TODO: Implement this method
-		return false;
+	public boolean delete(long id) {
+		SQLiteDatabase db = dataHelper.getWritableDatabase();
+		db.delete(nameOfTable, "id_task = " + id, null);
+		return true;
 	}
 
 
